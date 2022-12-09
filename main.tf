@@ -100,7 +100,7 @@ resource "tencentcloud_mysql_privilege" "this" {
 }
 
 resource "tencentcloud_mysql_backup_policy" "this" {
-  count = var.create_backup_policy && var.instance_id == "" ? 1 : 0
+  count = var.create_backup_policy ? 1 : 0
 
   mysql_id         = local.instance_id
   backup_model     = var.backup_model

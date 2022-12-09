@@ -46,7 +46,7 @@ output "task_status" {
 #################
 output "backup_policy_id" {
   description = "The id of backup policy."
-  value       = concat(tencentcloud_mysql_backup_policy.this.*.binlog_period, [""])[0]
+  value       = concat(tencentcloud_mysql_backup_policy.this.*.id, [""])[0]
 }
 
 output "binlog_period" {

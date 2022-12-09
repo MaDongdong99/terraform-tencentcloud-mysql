@@ -52,4 +52,34 @@ module "mysql" {
   backup_model = "physical"
   backup_time = "02:00-06:00"
   retention_period = 7
+
+  # MySQL privilege
+  create_mysql_privilege = true
+  mysql_privilege = [
+    {
+      account_name = "test"
+      global = ["SELECT"]
+      database = [
+        {
+          database_name = "your_database"
+          privileges = ["INSERT", "UPDATE"]
+        }
+      ]
+      table = [
+        {
+          database_name = "your_database"
+          table_name = "your_table"
+          privileges = ["UPDATE", "DELETE"]
+        }
+      ]
+      column = [
+        {
+          database_name = "your_database"
+          table_name = "your_table"
+          column_name = "test_column"
+          privileges = ["DELETE"]
+        }
+      ]
+    }
+  ]
 }

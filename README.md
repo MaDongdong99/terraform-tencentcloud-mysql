@@ -84,21 +84,27 @@ module "mysql" {
         account_name = "test"
         gloabl = ["ALTER", "CREATE", "DELETE", "DROP", "INDEX"]
         account_host = "10.0.0.1"
-        column = [{
-          column_name = "host" 
-          database_name = "mysql"
-          privileges = ["SELECT", "INSERT", "UPDATE", "REFERENCES"]
-          table_name = "test_table"
-        }]
-        databases = [{
-          database_name = "mysql"
-          privileges = ["SELECT"]
-        }]
-        table = [{
-          database_name = "mysql"
-          privileges = ["SELECT", "INSERT", "UPDATE"]
-          table_name = "test_table"
-        }]
+        column = [
+          {
+            column_name = "host" 
+            database_name = "mysql"
+            privileges = ["SELECT", "INSERT", "UPDATE", "REFERENCES"]
+            table_name = "test_table"
+          }
+        ]
+        databases = [
+          {
+            database_name = "mysql"
+            privileges = ["SELECT"]
+          }
+        ]
+        table = [
+          {
+            database_name = "mysql"
+            privileges = ["SELECT", "INSERT", "UPDATE"]
+            table_name = "test_table"
+          }
+        ]
       }
     ]
 
@@ -184,21 +190,27 @@ module "mysql" {
         account_name = ""
         gloabl = ""
         account_host = ""
-        column = [{
-          column_name = "host" 
-          database_name = "mysql"
-          privileges = ["SELECT", "INSERT", "UPDATE", "REFERENCES"]
-          table_name = "test_table"
-        }]
-        databases = [{
-          database_name = "mysql"
-          privileges = ["SELECT"]
-        }]
-        table = [{
-          database_name = "mysql"
-          privileges = ["SELECT", "INSERT", "UPDATE"]
-          table_name = "test_table"
-        }]
+        column = [
+          {
+            column_name = "host" 
+            database_name = "mysql"
+            privileges = ["SELECT", "INSERT", "UPDATE", "REFERENCES"]
+            table_name = "test_table"
+          }
+        ]
+        databases = [
+          {
+            database_name = "mysql"
+            privileges = ["SELECT"]
+          }
+        ]
+        table = [
+          {
+            database_name = "mysql"
+            privileges = ["SELECT", "INSERT", "UPDATE"]
+            table_name = "test_table"
+          }
+        ]
       }
     ]
 

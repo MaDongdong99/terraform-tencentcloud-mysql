@@ -4,45 +4,6 @@ variable "create_mysql_instance" {
   default     = true
 }
 
-variable "create_mysql_account" {
-  description = "Whether to create mysql account."
-  type        = bool
-  default     = true
-}
-
-variable "create_backup_policy" {
-  description = "Whether to create mysql backup policy."
-  type        = bool
-  default     = true
-}
-
-variable "create_account_privilege" {
-  description = "Whether to create mysql account privilege."
-  type        = bool
-  default     = false
-}
-
-variable "create_mysql_privilege" {
-  description = "Whether to create mysql privilege."
-  type        = bool
-  default     = false
-}
-
-variable "create_mysql_readonly_instance" {
-  description = "Whether to create mysql readonly instance."
-  type        = bool
-  default     = false
-}
-
-variable "instance_id" {
-  description = "The id of a mysql instance."
-  type        = string
-  default     = ""
-}
-
-###############
-# MySQL instance
-###############
 variable "instance_name" {
   description = "The name of a mysql instance."
   type        = string
@@ -116,7 +77,6 @@ variable "parameters" {
 }
 
 # MySQL instance net configuration
-
 variable "internet_service" {
   description = "Indicates whether to enable the access to an instance from public network: 0 - No, 1 - Yes."
   type = number
@@ -142,7 +102,6 @@ variable "subnet_id" {
 }
 
 # MySQL instance payment configuration
-
 variable "charge_type" {
   description = "Pay type of instance, valid values are PREPAID, POSTPAID. Default is POSTPAID."
   type = string
@@ -167,7 +126,6 @@ variable "force_delete" {
 }
 
 # MySQL instance slave configuration
-
 variable "first_slave_zone" {
   description = "Zone information about first slave instance."
   type        = string
@@ -190,71 +148,4 @@ variable "slave_sync_mode" {
   description = "Data replication mode. 0 - Async replication; 1 - Semisync replication; 2 - Strongsync replication."
   type        = number
   default     = 0
-}
-
-##################
-# readonly instance
-##################
-
-variable "readonly_instances" {
-  description = "Multiple readonly instances.Every element of the list contains a tencentcloud_mysql_readonly_instance configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_readonly_instance.html for configuration guide."
-  type        = list(map(any))
-  default     = []
-}
-
-variable "readonly_instance_zone" {
-  description = "Zone information of readonly instance."
-  type = string
-  default = ""
-}
-
-###############
-# backup policy
-###############
-
-variable "backup_model" {
-  description = "Backup method. Supported values include: 'physical' - physical backup."
-  type        = string
-  default     = "physical"
-}
-
-variable "backup_time" {
-  description = " Instance backup time, in the format of \"HH:mm-HH:mm\". Time setting interval is four hours. Default to \"02:00-06:00\". The following value can be supported: 02:00-06:00, 06:00-10:00, 10:00-14:00, 14:00-18:00, 18:00-22:00, and 22:00-02:00."
-  type        = string
-  default     = "02:00-06:00"
-}
-
-variable "retention_period" {
-  description = " Instance backup retention days. Valid values: [7-730]. And default value is 7."
-  type        = number
-  default     = 7
-}
-
-##########
-# account
-##########
-
-variable "account" {
-  description = "Multiple account instances.Every element of the list contains a tencentcloud_mysql_account configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_account.html for configuration guide."
-  type = list(map(string))
-  default     = []
-}
-
-#################
-# account privilege 
-#################
-variable "account_privilege" {
-  description = "Multiple account privilege configuration instances.Every element of the list contains a tencentcloud_mysql_account_privilege configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_account_privilege.html for configuration guide."
-  type = list(map(any))
-  default     = []
-}
-
-#################
-# database privilege
-#################
-
-variable "mysql_privilege" {
-  description = "Multiple privilege configuration instances.Every element of the list contains a tencentcloud_mysql_privilege configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_privilege.html for configuration guide."
-  type = list(map(any))
-  default     = []
 }
