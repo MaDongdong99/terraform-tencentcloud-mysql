@@ -39,7 +39,7 @@ module "mysql" {
   }
 
   # MySQL account
-  accunt = [
+  account = [
     {
       account_name = "test"
       account_password = "1234567"

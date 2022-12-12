@@ -198,7 +198,6 @@ variable "slave_sync_mode" {
 
 variable "readonly_instances" {
   description = "Multiple readonly instances.Every element of the list contains a tencentcloud_mysql_readonly_instance configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_readonly_instance.html for configuration guide."
-  type        = list(map(any))
   default     = []
 }
 
@@ -245,7 +244,6 @@ variable "account" {
 #################
 variable "account_privilege" {
   description = "Multiple account privilege configuration instances.Every element of the list contains a tencentcloud_mysql_account_privilege configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_account_privilege.html for configuration guide."
-  type = list(map(any))
   default     = []
 }
 
@@ -255,6 +253,5 @@ variable "account_privilege" {
 
 variable "mysql_privilege" {
   description = "Multiple privilege configuration instances.Every element of the list contains a tencentcloud_mysql_privilege configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_privilege.html for configuration guide."
-  type = list(map(any))
   default     = []
 }

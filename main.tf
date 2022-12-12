@@ -10,13 +10,13 @@ resource "tencentcloud_mysql_instance" "this" {
   count = var.create_mysql_instance && var.instance_id == "" ? 1 : 0
 
   instance_name     = var.instance_name
-  root_password     = var.root_password
   mem_size          = var.mem_size
   volume_size       = var.volume_size
   tags              = var.tags
   availability_zone = var.availability_zone
   engine_version    = var.engine_version
   project_id        = var.project_id
+  root_password     = var.root_password
   security_groups   = var.security_groups
   parameters        = var.parameters
   device_type       = var.device_type
@@ -53,6 +53,8 @@ resource "tencentcloud_mysql_account" "this" {
   host        = lookup(var.account[count.index], "account_host", "%")
 }
 
+
+# It has been deprecated and replaced by tencentcloud_mysql_privilege.
 resource "tencentcloud_mysql_account_privilege" "this" {
   count = local.account_privilege_number
 

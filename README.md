@@ -54,6 +54,7 @@ module "mysql" {
 
     ###############
     # MySQL Account Privilege
+    # It has been deprecated and replaced by tencentcloud_mysql_privilege.
     ###############
 
     create_account_privilege = true
@@ -277,7 +278,7 @@ module "mysql" {
 | create_mysql_readonly_instance | Whether to create mysql readonly_instance. | bool | false | no 
 | internet_service | Indicates whether to enable the access to an instance from public network: 0 - No, 1 - Yes. | string | 0 | no 
 | auto_renew_flag | Auto renew flag. NOTES: Only supported prepaid instance. | string | 0 | no 
-| account_privilege | Multiple account privilege configuration instances.Every element of the list contains a tencentcloud_mysql_account_privilege configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_account_privilege.html for configuration guide. | list(map(any)) | [] | no 
+| account_privilege | Multiple account privilege configuration instances.Every element of the list contains a tencentcloud_mysql_account_privilege configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_account_privilege.html for configuration guide. | list | [] | no 
 | mem_size | Memory size (in MB). | string | 1000 | no 
 | cpu | CPU cores. | number | 2 | no 
 | device_type | Device type. | string | UNIVERSAL | no 
@@ -303,11 +304,11 @@ module "mysql" {
 | slave_deploy_mode | Availability zone deployment method. Available values: 0 - Single availability zone; 1 - Multiple availability zones. | string | 0 | no 
 | second_slave_zone | Zone information about second slave instance. | string | "" | no 
 | account | Multiple account instances.Every element of the list contains a tencentcloud_mysql_account configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_account.html for configuration guide. | list(map(string)) | [] | no 
-| mysql_privilege | Multiple privilege configuration instances.Every element of the list contains a tencentcloud_mysql_privilege configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_privilege.html for configuration guide. | list(map(any)) | [] | no 
+| mysql_privilege | Multiple privilege configuration instances.Every element of the list contains a tencentcloud_mysql_privilege configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_privilege.html for configuration guide. | list | [] | no 
 | instance_id | The id of a mysql instance. | string | "" | no 
 | subnet_id | Private network ID. If vpc_id is set, this value is required. | string | "" | no 
 | charge_type | Pay type of instance, valid values are PREPAID, POSTPAID. Default is POSTPAID. | string | POSTPAID | no 
-| readonly_instances | Multiple readonly instances.Every element of the list contains a tencentcloud_mysql_readonly_instance configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_readonly_instance.html for configuration guide. | list(map(any)) | [] | no 
+| readonly_instances | Multiple readonly instances.Every element of the list contains a tencentcloud_mysql_readonly_instance configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_readonly_instance.html for configuration guide. | list | [] | no 
 | readonly_instance_zone | Zone information of readonly instance. | string | "" | no 
 
 

@@ -1,7 +1,7 @@
 # MySql Account Privilege Tencent Cloud MySQL Terraform Module
-
 ## Usage
 
+### It has been deprecated and replaced by tencentcloud_mysql_privilege.
 ```hcl
 module "mysql" {
   source  = "terraform-tencentcloud-modules/mysql/tencentcloud//modules/mysql_instance"
