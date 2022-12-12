@@ -51,25 +51,25 @@ variable "instance_name" {
 
 variable "mem_size" {
   description = "Memory size (in MB)."
-  type = number
+  type        = number
   default     = 1000
 }
 
 variable "volume_size" {
   description = "Disk size (in GB)."
-  type = number
+  type        = number
   default     = 200
 }
 
 variable "cpu" {
   description = "Cpu cores."
-  type = number
+  type        = number
   default     = 2
 }
 
 variable "device_type" {
   description = "Device type."
-  type = string
+  type        = string
   default     = "UNIVERSAL"
 }
 
@@ -81,25 +81,25 @@ variable "tags" {
 
 variable "engine_version" {
   description = "The version number of the database engine to use. Supported versions include 5.5/5.6/5.7, and default is 5.7."
-  type = string
+  type        = string
   default     = "5.7"
 }
 
 variable "root_password" {
   description = "Password of root account. This parameter can be specified when you purchase master instances, but it should be ignored when you purchase read-only instances or disaster recovery instances."
-  type = string
+  type        = string
   default     = "password"
 }
 
 variable "availability_zone" {
   description = "Indicates which availability zone will be used."
-  type = string
+  type        = string
   default     = "ap-guangzhou-2"
 }
 
 variable "project_id" {
   description = "Project ID, default value is 0."
-  type = number
+  type        = number
   default     = 0
 }
 
@@ -119,25 +119,25 @@ variable "parameters" {
 
 variable "internet_service" {
   description = "Indicates whether to enable the access to an instance from public network: 0 - No, 1 - Yes."
-  type = number
+  type        = number
   default     = 0
 }
 
 variable "intranet_port" {
   description = "Public access port, rang form 1024 to 65535 and default value is 3306."
-  type = number
+  type        = number
   default     = 3306
 }
 
 variable "vpc_id" {
   description = "ID of VPC, which can be modified once every 24 hours and can't be removed."
-  type = string
+  type        = string
   default     = ""
 }
 
 variable "subnet_id" {
   description = "Private network ID. If vpc_id is set, this value is required."
-  type = string
+  type        = string
   default     = ""
 }
 
@@ -145,7 +145,7 @@ variable "subnet_id" {
 
 variable "charge_type" {
   description = "Pay type of instance, valid values are PREPAID, POSTPAID. Default is POSTPAID."
-  type = string
+  type        = string
   default     = "POSTPAID"
 }
 
@@ -156,13 +156,13 @@ variable "prepaid_period" {
 
 variable "auto_renew_flag" {
   description = "Auto renew flag. NOTES: Only supported prepaid instance."
-  type = number
+  type        = number
   default     = 0
 }
 
 variable "force_delete" {
   description = "Indicate whether to delete instance directly or not. Default is false. If set true, the instance will be deleted instead of staying recycle bin. Note: only works for PREPAID instance. When the main mysql instance set true, this para of the readonly mysql instance will not take effect."
-  type = bool
+  type        = bool
   default     = false
 }
 
@@ -203,8 +203,8 @@ variable "readonly_instances" {
 
 variable "readonly_instance_zone" {
   description = "Zone information of readonly instance."
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 ###############
@@ -235,7 +235,7 @@ variable "retention_period" {
 
 variable "account" {
   description = "Multiple account instances.Every element of the list contains a tencentcloud_mysql_account configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_account.html for configuration guide."
-  type = list(map(string))
+  type        = list(map(string))
   default     = []
 }
 

@@ -3,7 +3,7 @@ locals {
   account_privilege_number = var.create_mysql_account && var.create_account_privilege && var.instance_id != "" ? length(var.account_privilege) : 0
   mysql_privilege_number   = var.create_mysql_account && var.create_mysql_privilege && var.instance_id != "" ? length(var.mysql_privilege) : 0
   readonly_instance_number = var.create_mysql_readonly_instance && var.instance_id != "" ? length(var.readonly_instances) : 0
-  instance_id = var.instance_id == "" ? tencentcloud_mysql_instance.this.0.id : var.instance_id 
+  instance_id              = var.instance_id == "" ? tencentcloud_mysql_instance.this.0.id : var.instance_id
 }
 
 resource "tencentcloud_mysql_instance" "this" {
