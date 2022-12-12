@@ -1,5 +1,5 @@
 resource "tencentcloud_mysql_readonly_instance" "this" {
-  count = var.create_mysql_readonly_instance && var.instance_id != "" ? 1 : 0
+  count = var.create_mysql_readonly_instance ? 1 : 0
 
   instance_name = var.instance_name
   master_instance_id = var.instance_id

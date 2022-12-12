@@ -1,5 +1,5 @@
 resource "tencentcloud_mysql_privilege" "this" {
-  count = var.create_mysql_readonly_instance && var.mysql_id != "" ? 1 : 0
+  count = var.create_mysql_privilege ? 1 : 0
 
   account_name = var.account_name
   global = var.global

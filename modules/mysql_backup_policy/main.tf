@@ -1,5 +1,5 @@
 resource "tencentcloud_mysql_backup_policy" "this" {
-  count = var.create_backup_policy && var.mysql_id != "" ? 1 : 0
+  count = var.create_backup_policy ? 1 : 0
 
   mysql_id         = var.mysql_id
   backup_model     = var.backup_model

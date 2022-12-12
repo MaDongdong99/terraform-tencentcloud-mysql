@@ -1,7 +1,7 @@
 variable "create_mysql_readonly_instance" {
   description = "Whether to create mysql readonly instance."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "instance_id" {

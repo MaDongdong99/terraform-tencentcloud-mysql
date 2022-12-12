@@ -1,6 +1,6 @@
 output "db_instance_id" {
   description = "The instance id of mysql."
-  value       = try(tencentcloud_mysql_instance.this[0].id : "")
+  value       = try(tencentcloud_mysql_instance.this[0].id, "")
 }
 
 output "gtid" {

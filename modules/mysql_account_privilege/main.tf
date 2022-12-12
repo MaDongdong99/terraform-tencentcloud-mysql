@@ -1,5 +1,5 @@
 resource "tencentcloud_mysql_account_privilege" "this" {
-  count = var.create_account_privilege && var.mysql_id != "" ? 1 : 0
+  count = var.create_account_privilege ? 1 : 0
 
   account_name   = var.account_name
   database_names = var.database_names

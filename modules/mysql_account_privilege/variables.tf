@@ -10,7 +10,7 @@ variable "account_name" {
   default     = ""
 }
 
-variable "databases_names" {
+variable "database_names" {
   description = "List of specified database name."
   type        = list(string)
   default     = []
