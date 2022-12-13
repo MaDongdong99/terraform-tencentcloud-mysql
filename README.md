@@ -43,7 +43,7 @@ module "mysql" {
     # MySQL Account
     ###############
 
-    accunt = [
+    account = [
       {
         account_name = "test"
         account_password = "1234567"
@@ -58,7 +58,7 @@ module "mysql" {
     ###############
 
     create_account_privilege = true
-    accunt_privilege = [
+    account_privilege = [
       {
         account_name = "test"
         database_names = ["test_db"]
@@ -150,7 +150,7 @@ module "mysql" {
     # MySQL Account
     ###############
 
-    accunt = [
+    account = [
       {
         account_name = "test"
         account_password = "1234567"
@@ -164,7 +164,7 @@ module "mysql" {
     ###############
 
     create_account_privilege = true
-    accunt_privilege = [
+    account_privilege = [
       {
         account_name = "test"
         database_names = ["test_db"]
