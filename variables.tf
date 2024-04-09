@@ -88,7 +88,7 @@ variable "engine_version" {
 variable "root_password" {
   description = "Password of root account. This parameter can be specified when you purchase master instances, but it should be ignored when you purchase read-only instances or disaster recovery instances."
   type        = string
-  default     = "password"
+  default     = ""
 }
 
 variable "availability_zone" {
@@ -233,10 +233,18 @@ variable "retention_period" {
 # account
 ##########
 
-variable "account" {
+variable "accounts" {
   description = "Multiple account instances.Every element of the list contains a tencentcloud_mysql_account configuration object.See https://www.terraform.io/docs/providers/tencentcloud/r/mysql_account.html for configuration guide."
-  type        = list(map(string))
-  default     = []
+  type        = any
+  default     = {}
+}
+
+##
+# databases
+##
+variable "databases" {
+  type = any
+  default = {}
 }
 
 #################

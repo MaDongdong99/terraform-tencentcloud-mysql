@@ -1,7 +1,31 @@
+resource "random_password" "root" {
+  length           = 32
+  min_numeric      = 2
+  min_special      = 2
+  min_upper        = 2
+  min_lower        = 2
+  override_special = "_+-&=!@#$%^*()"
+}
+
+resource "random_password" "accounts" {
+  for_each = local.accounts
+  length           = 32
+  min_numeric      = 2
+  min_special      = 2
+  min_upper        = 2
+  min_lower        = 2
+  override_special = "_+-&=!@#$%^*()"
+}
+
 locals {
-  account_number           = var.create_mysql_account && var.instance_id != "" ? length(var.account) : 0
-  account_privilege_number = var.create_mysql_account && var.create_account_privilege && var.instance_id != "" ? length(var.account_privilege) : 0
-  mysql_privilege_number   = var.create_mysql_account && var.create_mysql_privilege && var.instance_id != "" ? length(var.mysql_privilege) : 0
+
+  random_root_password = var.root_password == null || var.root_password == "" ? true: false
+  root_password  = local.random_root_password ? random_password.root.result : var.root_password
+  accounts = {for k, account in var.accounts: k=> account if try(account.create, true)}
+  account_passwords = { for k, account in local.accounts: k => try(account.password, null) == null? random_password.accounts[k].result: account.password}
+  databases = { for k, database in var.databases: k => database if try(database.create, true)}
+  privileges = { for k, account in var.accounts: k=> account if try(account.create_privileges, true)}
+
   readonly_instance_number = var.create_mysql_readonly_instance && var.instance_id != "" ? length(var.readonly_instances) : 0
   instance_id              = var.instance_id == "" ? tencentcloud_mysql_instance.this.0.id : var.instance_id
 }
@@ -16,7 +40,7 @@ resource "tencentcloud_mysql_instance" "this" {
   availability_zone = var.availability_zone
   engine_version    = var.engine_version
   project_id        = var.project_id
-  root_password     = var.root_password
+  root_password     = local.root_password
   security_groups   = var.security_groups
   parameters        = var.parameters
   device_type       = var.device_type
@@ -41,40 +65,47 @@ resource "tencentcloud_mysql_instance" "this" {
   second_slave_zone = var.second_slave_zone
   slave_deploy_mode = var.slave_deploy_mode
   slave_sync_mode   = var.slave_sync_mode
+
+  lifecycle {
+    ignore_changes = [
+      root_password
+    ]
+  }
 }
 
 resource "tencentcloud_mysql_account" "this" {
-  count = local.account_number
+  for_each = local.accounts
 
   mysql_id    = local.instance_id
-  name        = var.account[count.index].account_name
-  password    = var.account[count.index].account_password
-  description = lookup(var.account[count.index], "account_description", "default description")
-  host        = lookup(var.account[count.index], "account_host", "%")
+  name        = each.value.name
+  password    = local.account_passwords[each.key]
+  description = try(each.value.description, "default description")
+  host        = try(each.value.host, "%")
+  lifecycle {
+    ignore_changes = [
+      password
+    ]
+  }
 }
 
-
-# It has been deprecated and replaced by tencentcloud_mysql_privilege.
-resource "tencentcloud_mysql_account_privilege" "this" {
-  count = local.account_privilege_number
-
-  account_name   = var.account_privilege[count.index].account_name
-  database_names = var.account_privilege[count.index].database_names
-  mysql_id       = local.instance_id
-  account_host   = lookup(var.account_privilege[count.index], "account_host", "%")
-  privileges     = lookup(var.account_privilege[count.index], "privileges", [])
+resource "tencentcloud_mysql_database" "databases" {
+  for_each = local.databases
+  instance_id        = local.instance_id
+  db_name            = each.value.db_name
+  character_set_name = try(each.value.character_set_name, "utf8")
 }
 
 resource "tencentcloud_mysql_privilege" "this" {
-  count = local.mysql_privilege_number
+  depends_on = [tencentcloud_mysql_account.this, tencentcloud_mysql_database.databases]
+  for_each = local.privileges
 
-  account_name = var.mysql_privilege[count.index].account_name
-  global       = var.mysql_privilege[count.index].global
+  account_name = each.value.name
+  global       = try(each.value.privilege_global, [])
   mysql_id     = local.instance_id
-  account_host = lookup(var.mysql_privilege[count.index], "account_host", "%")
+  account_host = try(each.value.host, "%")
 
   dynamic "column" {
-    for_each = lookup(var.mysql_privilege[count.index], "column", [])
+    for_each = try(each.value.privilege_columns, {})
     content {
       column_name   = column.value["column_name"]
       table_name    = column.value["table_name"]
@@ -84,7 +115,7 @@ resource "tencentcloud_mysql_privilege" "this" {
   }
 
   dynamic "database" {
-    for_each = lookup(var.mysql_privilege[count.index], "database", [])
+    for_each = try(each.value.privilege_databases, {})
     content {
       database_name = database.value["database_name"]
       privileges    = database.value["privileges"]
@@ -92,7 +123,7 @@ resource "tencentcloud_mysql_privilege" "this" {
   }
 
   dynamic "table" {
-    for_each = lookup(var.mysql_privilege[count.index], "table", [])
+    for_each = try(each.value.privilege_table, {})
     content {
       database_name = table.value["database_name"]
       privileges    = table.value["privileges"]

@@ -41,6 +41,11 @@ output "task_status" {
   value       = concat(tencentcloud_mysql_instance.this.*.task_status, [""])[0]
 }
 
+output "root_password" {
+  sensitive = true
+  value   = concat(tencentcloud_mysql_instance.this.*.root_password, [""])[0]
+}
+
 #################
 # MySQL backup policy
 #################
@@ -59,23 +64,27 @@ output "binlog_period" {
 #################
 output "account_ids" {
   description = "Account id list which returned by the account resource created.If not created,returns `[]`."
-  value       = var.create_mysql_account ? tencentcloud_mysql_account.this.*.id : [""]
+  value       = { for k, account in tencentcloud_mysql_account.this: k=> account.id}
 }
 
+output "account_passwords" {
+  sensitive = true
+  value = local.account_passwords
+}
 #################
 # MySQL account privilege
 #################
-output "account_privilege_ids" {
-  description = "The id list of created resource tencentcloud_mysql_account_privilege."
-  value       = var.create_account_privilege ? tencentcloud_mysql_account_privilege.this.*.id : [""]
-}
+#output "account_privilege_ids" {
+#  description = "The id list of created resource tencentcloud_mysql_account_privilege."
+#  value       = var.create_account_privilege ? tencentcloud_mysql_account_privilege.this.*.id : [""]
+#}
 
 #################
 # MySQL privilege
 #################
 output "mysql_privilege_ids" {
   description = "The id list of created resource tencentcloud_mysql_privilege."
-  value       = var.create_mysql_privilege ? tencentcloud_mysql_privilege.this.*.id : [""]
+  value       = { for k, p in tencentcloud_mysql_privilege.this: k => p.id }
 }
 
 #################

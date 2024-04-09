@@ -49,7 +49,7 @@ variable "engine_version" {
 variable "root_password" {
   description = "Password of root account. This parameter can be specified when you purchase master instances, but it should be ignored when you purchase read-only instances or disaster recovery instances."
   type = string
-  default     = "password"
+  default     = ""
 }
 
 variable "availability_zone" {

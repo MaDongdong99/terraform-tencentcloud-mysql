@@ -38,3 +38,7 @@ output "task_status" {
   value       = concat(tencentcloud_mysql_instance.this.*.task_status, [""])[0]
 }
 
+output "root_password" {
+  sensitive = true
+  value = local.root_password
+}

@@ -1,3 +1,17 @@
+locals {
+  random_root_password = var.root_password == null || var.root_password == "" ? true: false
+  root_password  = local.random_root_password ? random_password.root.result : var.root_password
+}
+
+resource "random_password" "root" {
+  length           = 32
+  min_numeric      = 2
+  min_special      = 2
+  min_upper        = 2
+  min_lower        = 2
+  override_special = "~!@#$%^&*_-+=`|(){}[]:;'<>,.?/"
+}
+
 resource "tencentcloud_mysql_instance" "this" {
   count = var.create_mysql_instance ? 1 : 0
   
@@ -9,7 +23,7 @@ resource "tencentcloud_mysql_instance" "this" {
   engine_version    = var.engine_version
   device_type       = var.device_type
   project_id        = var.project_id
-  root_password     = var.root_password
+  root_password     = local.root_password
   security_groups   = var.security_groups
   parameters        = var.parameters
   tags              = var.tags
